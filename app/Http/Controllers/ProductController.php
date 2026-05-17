@@ -2,81 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()?->role !== 'admin') {
-                abort(403);
+        $products = Product::with('categories', 'user')->latest()->get();
+
+        return view('admin.products.index', compact('products'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('admin.products.create', compact('categories'));
+    }
+
+    public function show(Product $product)
+    {
+        $product->load('categories', 'user');
+
+        return view('admin.products.show', compact('product'));
+    }
+
+    public function store(ProductRequest $request)
+    {
+        $data = $this->validatedProductData($request);
+
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('products', 'public');
+        }
+
+        $product = $request->user()->products()->create($data);
+        $product->categories()->sync($request->input('categories', []));
+
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan.');
+    }
+
+    public function edit(Product $product)
+    {
+        $categories = Category::all();
+
+        return view('admin.products.edit', compact('product', 'categories'));
+    }
+
+    public function update(ProductRequest $request, Product $product)
+    {
+        $data = $this->validatedProductData($request);
+
+        if ($request->hasFile('gambar')) {
+            if ($product->gambar) {
+                Storage::disk('public')->delete($product->gambar);
             }
-            return $next($request);
-        });
-    }
 
-    public function index() {
-        $products = Product::with('categories')->where('user_id', auth()->id())->get();
-        return view('admin.products.index', compact('products')); // [cite: 41]
-    }
+            $data['gambar'] = $request->file('gambar')->store('products', 'public');
+        }
 
-    public function create() {
-        $categories = Category::all();
-        return view('admin.products.create', compact('categories')); // [cite: 42]
-    }
-
-    public function store(Request $request) {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'categories' => ['nullable', 'array'],
-            'categories.*' => ['integer', 'exists:categories,id'],
-        ]);
-
-        $product = auth()->user()->products()->create($request->only('name', 'price'));
+        $product->update($data);
         $product->categories()->sync($request->input('categories', []));
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function edit(Product $product) {
-        if ($product->user_id !== auth()->id()) {
-            abort(403);
+    public function destroy(Product $product)
+    {
+        if ($product->gambar) {
+            Storage::disk('public')->delete($product->gambar);
         }
 
-        $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'categories')); // [cite: 43]
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus.');
     }
 
-    public function update(Request $request, Product $product) {
-        if ($product->user_id !== auth()->id()) {
-            abort(403);
-        }
+    private function validatedProductData(ProductRequest $request): array
+    {
+        $validated = $request->validated();
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'categories' => ['nullable', 'array'],
-            'categories.*' => ['integer', 'exists:categories,id'],
-        ]);
-
-        $product->update($request->only('name', 'price'));
-        $product->categories()->sync($request->input('categories', []));
-
-        return redirect()->route('admin.products.index');
-    }
-
-    public function destroy(Product $product) {
-        if ($product->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $product->delete(); // [cite: 44]
-        return redirect()->route('admin.products.index');
+        return [
+            'nama_produk' => $validated['nama_produk'],
+            'name' => $validated['nama_produk'],
+            'deskripsi' => $validated['deskripsi'] ?? null,
+            'harga' => $validated['harga'],
+            'price' => $validated['harga'],
+            'stok' => $validated['stok'],
+        ];
     }
 }
