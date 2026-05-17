@@ -13,10 +13,10 @@
                     <h1 class="mt-1 text-2xl font-extrabold text-slate-900">Tambah Produk</h1>
                     <p class="text-sm text-slate-500">Lengkapi informasi produk untuk ditampilkan di katalog.</p>
                 </div>
-                <a href="{{ route('admin.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-center text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
+                <a href="{{ route('seller.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-center text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
             </div>
 
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @include('admin.products.partials.form')
                 <button type="submit" class="w-full rounded-2xl bg-[#ee4d2d] px-5 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#d94325] sm:w-auto">Simpan Produk</button>

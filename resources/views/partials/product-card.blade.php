@@ -1,5 +1,5 @@
 <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-950/10">
-    <a href="{{ auth()->check() && auth()->user()->role === 'admin' ? route('admin.products.show', $product) : '#' }}" class="block">
+    <a href="{{ auth()->check() && auth()->user()->role === 'seller' ? route('seller.products.show', $product) : route('products.show', $product) }}" class="block">
         <div class="relative aspect-square overflow-hidden bg-slate-100">
             @if($product->gambar)
                 <img src="{{ asset('storage/'.$product->gambar) }}" alt="{{ $product->nama_produk }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
@@ -20,11 +20,11 @@
         </div>
         <div class="flex gap-2">
             @auth
-                @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.products.show', $product) }}" class="flex-1 rounded-xl border border-orange-200 px-3 py-2 text-center text-xs font-bold text-[#ee4d2d] transition hover:bg-orange-50">Detail</a>
-                    <a href="{{ route('admin.products.edit', $product) }}" class="rounded-xl bg-[#ee4d2d] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#d94325]">Edit</a>
+                @if(auth()->user()->role === 'seller')
+                    <a href="{{ route('seller.products.show', $product) }}" class="flex-1 rounded-xl border border-orange-200 px-3 py-2 text-center text-xs font-bold text-[#ee4d2d] transition hover:bg-orange-50">Detail</a>
+                    <a href="{{ route('seller.products.edit', $product) }}" class="rounded-xl bg-[#ee4d2d] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#d94325]">Edit</a>
                 @else
-                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-full">
+                    <form action="{{ route('cart.add', $product) }}" method="POST" class="w-full">
                         @csrf
                         <button type="submit" class="w-full rounded-xl bg-[#ee4d2d] px-3 py-2 text-sm font-bold text-white transition hover:bg-[#d94325]">Tambah Cart</button>
                     </form>

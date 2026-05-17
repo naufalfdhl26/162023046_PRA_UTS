@@ -13,10 +13,10 @@
                     <h1 class="mt-1 text-2xl font-extrabold text-slate-900">{{ $product->nama_produk }}</h1>
                     <p class="text-sm text-slate-500">Perbarui informasi produk tanpa mengubah alur CRUD.</p>
                 </div>
-                <a href="{{ route('admin.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-center text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
+                <a href="{{ route('seller.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-center text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
             </div>
 
-            <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <form action="{{ route('seller.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')
                 @include('admin.products.partials.form')

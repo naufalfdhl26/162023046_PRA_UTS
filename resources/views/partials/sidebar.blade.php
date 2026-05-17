@@ -14,13 +14,16 @@
             <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#ee4d2d]">
                 <span class="h-2 w-2 rounded-full bg-[#ee4d2d]"></span> Profile
             </a>
-            @if(auth()->user()->role === 'admin')
-                <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#ee4d2d]">
+            @if(auth()->user()->role === 'seller')
+                <a href="{{ route('seller.products.index') }}" class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#ee4d2d]">
                     <span class="h-2 w-2 rounded-full bg-[#ee4d2d]"></span> Kelola Produk
                 </a>
             @else
                 <a href="{{ route('cart.index') }}" class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#ee4d2d]">
                     <span class="h-2 w-2 rounded-full bg-[#ee4d2d]"></span> Cart
+                </a>
+                <a href="{{ route('orders.index') }}" class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-700 transition hover:bg-orange-50 hover:text-[#ee4d2d]">
+                    <span class="h-2 w-2 rounded-full bg-[#ee4d2d]"></span> Pesanan Saya
                 </a>
             @endif
         </div>

@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::updateOrCreate(
-            ['email' => 'admin@example.com'],
-            ['name' => 'Admin', 'password' => Hash::make('password'), 'role' => 'admin']
+            ['email' => 'seller@example.com'],
+            ['name' => 'Seller Demo', 'password' => Hash::make('password'), 'role' => 'seller']
         );
 
         User::updateOrCreate(
-            ['email' => 'user@example.com'],
-            ['name' => 'User', 'password' => Hash::make('password'), 'role' => 'user']
+            ['email' => 'buyer@example.com'],
+            ['name' => 'Buyer Demo', 'password' => Hash::make('password'), 'role' => 'buyer']
         );
     }
 }

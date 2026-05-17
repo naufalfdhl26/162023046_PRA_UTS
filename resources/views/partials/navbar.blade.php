@@ -35,9 +35,10 @@
                 <a href="{{ auth()->check() ? route('products.index') : route('home') }}" class="rounded-lg px-3 py-2 transition hover:bg-white/15">Produk</a>
                 @auth
                     <a href="{{ route('dashboard') }}" class="rounded-lg px-3 py-2 transition hover:bg-white/15">Dashboard</a>
-                    @if(auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.products.index') }}" class="rounded-lg px-3 py-2 transition hover:bg-white/15">Admin</a>
+                    @if(auth()->user()->role === 'seller')
+                        <a href="{{ route('seller.products.index') }}" class="rounded-lg px-3 py-2 transition hover:bg-white/15">Produk Saya</a>
                     @else
+                        <a href="{{ route('orders.index') }}" class="rounded-lg px-3 py-2 transition hover:bg-white/15">Pesanan</a>
                         <a href="{{ route('cart.index') }}" class="relative grid h-10 w-10 place-items-center rounded-lg transition hover:bg-white/15" aria-label="Cart">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.5l2.25 12.75A2.25 2.25 0 0 0 8.22 17.5h8.56a2.25 2.25 0 0 0 2.2-1.78L20.25 7.5H5.1" />
@@ -74,9 +75,10 @@
             <a href="{{ auth()->check() ? route('products.index') : route('home') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Produk</a>
             @auth
                 <a href="{{ route('dashboard') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Dashboard</a>
-                @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.products.index') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Admin Produk</a>
+                @if(auth()->user()->role === 'seller')
+                    <a href="{{ route('seller.products.index') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Produk Saya</a>
                 @else
+                    <a href="{{ route('orders.index') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Pesanan Saya</a>
                     <a href="{{ route('cart.index') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">Cart</a>
                 @endif
                 <a href="{{ route('profile.edit') }}" class="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-white/15">{{ auth()->user()->name }}</a>

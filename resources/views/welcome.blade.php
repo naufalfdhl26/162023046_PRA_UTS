@@ -12,8 +12,8 @@
                 <div class="mt-6 flex flex-wrap gap-3">
                     <a href="#produk" class="rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-[#ee4d2d] shadow transition hover:-translate-y-1 hover:shadow-lg">Belanja Sekarang</a>
                     @auth
-                        @if(auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.products.create') }}" class="rounded-xl bg-black/15 px-5 py-3 text-sm font-extrabold text-white ring-1 ring-white/30 transition hover:bg-black/25">Tambah Produk</a>
+                        @if(auth()->user()->role === 'seller')
+                            <a href="{{ route('seller.products.create') }}" class="rounded-xl bg-black/15 px-5 py-3 text-sm font-extrabold text-white ring-1 ring-white/30 transition hover:bg-black/25">Tambah Produk</a>
                         @endif
                     @endauth
                 </div>

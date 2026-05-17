@@ -43,9 +43,12 @@ class User extends Authenticatable
     }
     public function products()
     {
-        // Relasi bahwa satu User bisa punya banyak Product
-        return $this->hasMany(Product::class); 
+        return $this->hasMany(Product::class, 'seller_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
     }
 }
-
 

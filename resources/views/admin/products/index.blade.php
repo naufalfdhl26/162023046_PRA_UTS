@@ -9,11 +9,11 @@
         <div class="space-y-5">
             <div class="flex flex-col gap-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <p class="text-sm font-bold uppercase tracking-wide text-[#ee4d2d]">Admin Produk</p>
+                    <p class="text-sm font-bold uppercase tracking-wide text-[#ee4d2d]">Seller Produk</p>
                     <h1 class="mt-1 text-2xl font-extrabold text-slate-900">Kelola Produk</h1>
                     <p class="text-sm text-slate-500">Tambah, lihat detail, edit, dan hapus produk toko.</p>
                 </div>
-                <a href="{{ route('admin.products.create') }}" class="inline-flex items-center justify-center rounded-xl bg-[#ee4d2d] px-5 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#d94325]">Tambah Produk</a>
+                <a href="{{ route('seller.products.create') }}" class="inline-flex items-center justify-center rounded-xl bg-[#ee4d2d] px-5 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#d94325]">Tambah Produk</a>
             </div>
 
             <div class="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-100">
@@ -48,9 +48,9 @@
                                     <td class="px-5 py-4 text-slate-500">{{ $product->created_at->format('d M Y') }}</td>
                                     <td class="px-5 py-4">
                                         <div class="flex flex-wrap gap-2">
-                                            <a href="{{ route('admin.products.show', $product) }}" class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Detail</a>
-                                            <a href="{{ route('admin.products.edit', $product) }}" class="rounded-xl bg-amber-500 px-3 py-2 text-xs font-bold text-white transition hover:bg-amber-600">Edit</a>
-                                            <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                            <a href="{{ route('seller.products.show', $product) }}" class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Detail</a>
+                                            <a href="{{ route('seller.products.edit', $product) }}" class="rounded-xl bg-amber-500 px-3 py-2 text-xs font-bold text-white transition hover:bg-amber-600">Edit</a>
+                                            <form action="{{ route('seller.products.destroy', $product) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirm('Yakin hapus produk ini?')" class="rounded-xl bg-rose-600 px-3 py-2 text-xs font-bold text-white transition hover:bg-rose-700">Hapus</button>
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin.products.create') }}" class="fixed bottom-6 right-6 grid h-14 w-14 place-items-center rounded-full bg-[#ee4d2d] text-3xl font-light text-white shadow-xl shadow-orange-950/20 transition hover:-translate-y-1 hover:bg-[#d94325]" aria-label="Tambah produk">+</a>
+            <a href="{{ route('seller.products.create') }}" class="fixed bottom-6 right-6 grid h-14 w-14 place-items-center rounded-full bg-[#ee4d2d] text-3xl font-light text-white shadow-xl shadow-orange-950/20 transition hover:-translate-y-1 hover:bg-[#d94325]" aria-label="Tambah produk">+</a>
         </div>
     </div>
 @endsection

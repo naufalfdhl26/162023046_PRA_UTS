@@ -11,7 +11,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('categories', 'user')->latest()->get();
+        $products = Product::with('categories', 'seller')
+            ->where('seller_id', auth()->id())
+            ->latest()
+            ->get();
 
         return view('admin.products.index', compact('products'));
     }
@@ -25,7 +28,9 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('categories', 'user');
+        $this->authorizeSellerProduct($product);
+
+        $product->load('categories', 'seller');
 
         return view('admin.products.show', compact('product'));
     }
@@ -33,6 +38,8 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $this->validatedProductData($request);
+        $data['seller_id'] = $request->user()->id;
+        $data['user_id'] = $request->user()->id;
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('products', 'public');
@@ -41,11 +48,13 @@ class ProductController extends Controller
         $product = $request->user()->products()->create($data);
         $product->categories()->sync($request->input('categories', []));
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan.');
+        return redirect()->route('seller.products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     public function edit(Product $product)
     {
+        $this->authorizeSellerProduct($product);
+
         $categories = Category::all();
 
         return view('admin.products.edit', compact('product', 'categories'));
@@ -53,6 +62,8 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, Product $product)
     {
+        $this->authorizeSellerProduct($product);
+
         $data = $this->validatedProductData($request);
 
         if ($request->hasFile('gambar')) {
@@ -66,18 +77,20 @@ class ProductController extends Controller
         $product->update($data);
         $product->categories()->sync($request->input('categories', []));
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('seller.products.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
     public function destroy(Product $product)
     {
+        $this->authorizeSellerProduct($product);
+
         if ($product->gambar) {
             Storage::disk('public')->delete($product->gambar);
         }
 
         $product->delete();
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus.');
+        return redirect()->route('seller.products.index')->with('success', 'Produk berhasil dihapus.');
     }
 
     private function validatedProductData(ProductRequest $request): array
@@ -92,5 +105,12 @@ class ProductController extends Controller
             'price' => $validated['harga'],
             'stok' => $validated['stok'],
         ];
+    }
+
+    private function authorizeSellerProduct(Product $product): void
+    {
+        if ((int) $product->seller_id !== (int) auth()->id()) {
+            abort(403, 'Anda hanya dapat mengelola produk milik sendiri.');
+        }
     }
 }

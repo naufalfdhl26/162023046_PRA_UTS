@@ -13,8 +13,8 @@
                     <h1 class="mt-1 text-2xl font-extrabold text-slate-900">{{ $product->nama_produk }}</h1>
                 </div>
                 <div class="flex gap-2">
-                    <a href="{{ route('admin.products.edit', $product) }}" class="rounded-xl bg-amber-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-amber-600">Edit</a>
-                    <a href="{{ route('admin.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
+                    <a href="{{ route('seller.products.edit', $product) }}" class="rounded-xl bg-amber-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-amber-600">Edit</a>
+                    <a href="{{ route('seller.products.index') }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-[#ee4d2d] hover:text-[#ee4d2d]">Kembali</a>
                 </div>
             </div>
 

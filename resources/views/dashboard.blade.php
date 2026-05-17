@@ -3,15 +3,15 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    @if(auth()->user()->role === 'admin')
+    @if(auth()->user()->role === 'seller')
         <div class="grid gap-5 lg:grid-cols-[260px_1fr]">
             @include('partials.sidebar')
 
             <div class="space-y-5">
                 <div class="rounded-3xl bg-gradient-to-r from-[#ee4d2d] to-[#ff7337] p-6 text-white shadow-lg">
-                    <p class="text-sm font-bold uppercase tracking-wide text-white/80">Admin Center</p>
-                    <h1 class="mt-2 text-3xl font-extrabold">Dashboard Admin</h1>
-                    <p class="mt-2 text-sm text-white/85">Pantau produk, user, dan aktivitas toko dari satu halaman.</p>
+                    <p class="text-sm font-bold uppercase tracking-wide text-white/80">Seller Center</p>
+                    <h1 class="mt-2 text-3xl font-extrabold">Dashboard Seller</h1>
+                    <p class="mt-2 text-sm text-white/85">Pantau produk milikmu, stok, dan aktivitas pesanan dari satu halaman.</p>
                 </div>
 
                 <div class="grid gap-4 md:grid-cols-3">
@@ -20,12 +20,12 @@
                         <p class="mt-3 text-4xl font-extrabold text-[#ee4d2d]">{{ $totalProducts }}</p>
                     </div>
                     <div class="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-lg">
-                        <p class="text-sm font-bold text-slate-500">Total User</p>
-                        <p class="mt-3 text-4xl font-extrabold text-[#ee4d2d]">{{ $totalUsers }}</p>
+                        <p class="text-sm font-bold text-slate-500">Total Stok</p>
+                        <p class="mt-3 text-4xl font-extrabold text-[#ee4d2d]">{{ $totalStock }}</p>
                     </div>
                     <div class="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-lg">
                         <p class="text-sm font-bold text-slate-500">Total Transaksi</p>
-                        <p class="mt-3 text-4xl font-extrabold text-[#ee4d2d]">128</p>
+                        <p class="mt-3 text-4xl font-extrabold text-[#ee4d2d]">{{ $totalSales }}</p>
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                             <h2 class="text-lg font-extrabold text-slate-900">Produk Terbaru</h2>
                             <p class="text-sm text-slate-500">Data terakhir yang masuk ke katalog.</p>
                         </div>
-                        <a href="{{ route('admin.products.index') }}" class="rounded-xl border border-orange-200 px-4 py-2 text-sm font-bold text-[#ee4d2d] transition hover:bg-orange-50">Lihat Semua</a>
+                        <a href="{{ route('seller.products.index') }}" class="rounded-xl border border-orange-200 px-4 py-2 text-sm font-bold text-[#ee4d2d] transition hover:bg-orange-50">Lihat Semua</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-left">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.products.create') }}" class="fixed bottom-6 right-6 grid h-14 w-14 place-items-center rounded-full bg-[#ee4d2d] text-3xl font-light text-white shadow-xl shadow-orange-950/20 transition hover:-translate-y-1 hover:bg-[#d94325]" aria-label="Tambah produk">+</a>
+                <a href="{{ route('seller.products.create') }}" class="fixed bottom-6 right-6 grid h-14 w-14 place-items-center rounded-full bg-[#ee4d2d] text-3xl font-light text-white shadow-xl shadow-orange-950/20 transition hover:-translate-y-1 hover:bg-[#d94325]" aria-label="Tambah produk">+</a>
             </div>
         </div>
     @else
@@ -75,7 +75,7 @@
             <div class="space-y-6">
                 <div class="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-100">
                     <div class="bg-gradient-to-r from-[#ee4d2d] to-[#ff7337] p-6 text-white">
-                        <p class="text-sm font-bold uppercase tracking-wide text-white/80">Dashboard User</p>
+                        <p class="text-sm font-bold uppercase tracking-wide text-white/80">Dashboard Buyer</p>
                         <h1 class="mt-2 text-3xl font-extrabold">Selamat datang, {{ $user->name }}</h1>
                     </div>
                     <div class="flex flex-col gap-5 p-6 sm:flex-row sm:items-center">
