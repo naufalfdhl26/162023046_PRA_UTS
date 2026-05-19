@@ -57,6 +57,14 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <div class="">
+            <div class="mb-4 flex justify-center">
+                {!! NoCaptcha::display() !!}
+            </div>
+            <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2 text-center" />
+            {!! NoCaptcha::renderJs() !!}
+        </div>
+
         <button type="submit" class="w-full rounded-2xl bg-[#ee4d2d] px-5 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#d94325]">Register</button>
 
         <p class="text-center text-sm text-slate-500">

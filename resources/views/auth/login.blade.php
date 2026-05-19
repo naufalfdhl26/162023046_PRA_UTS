@@ -4,6 +4,13 @@
         <p class="mt-1 text-sm text-slate-500">Masuk untuk lanjut belanja.</p>
     </div>
 
+    <div class="mb-4 flex justify-center">
+        <a href="{{ route('google.redirect') }}" class="inline-flex items-center gap-3 rounded-2xl border px-4 py-2 text-sm font-semibold transition hover:shadow-md">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="h-5 w-5" />
+            <span>Login dengan Google</span>
+        </a>
+    </div>
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
